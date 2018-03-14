@@ -1,8 +1,10 @@
 
-from lxml import html
 import requests, re, sys, os, string
-from bs4 import BeautifulSoup
 import json
+import database_conf as cfg
+from mysql.connector import MySQLConnection, Error
+from lxml import html
+from bs4 import BeautifulSoup
 
 
 def get_json_script(url):
@@ -28,14 +30,17 @@ def json_parser(json_script):
 	for post in posts:
 		post_caption = (post['node']['edge_media_to_caption']['edges'][0]['node']['text'])
 		post_id = (post['node']['shortcode'])
-		post_body = [post_id, post_caption]
-		print(post_body)
-		
+		post_picutre = (post['node']['display_url'])
+		post_timestamp = (post['node']['taken_at_timestamp'])
+
+		post_body = [post_id, post_caption, post_picutre, post_timestamp]
+				
 		posts_list.append(post_body)
 
+		#print(post_body[:-2])
 
 def main():
-	tag = "adsas"
+	tag = "palmeiras"
 	base_url = "https://www.instagram.com/explore/tags/"
 	explore_url = base_url + tag
 	get_json_script(explore_url)
