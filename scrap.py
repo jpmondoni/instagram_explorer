@@ -30,7 +30,10 @@ def json_parser(json_script):
 	posts_list = []
 	for i in range(len(posts)):
 		post_id = (posts[i]['node']['shortcode'])
-		post_caption = (posts[i]['node']['edge_media_to_caption']['edges'][0]['node']['text'])
+		try:
+			post_caption = (posts[i]['node']['edge_media_to_caption']['edges'][0]['node']['text'])
+		except IndexError as e:
+			print(e)
 		post_polarity = ac(post_caption)
 		pos = post_polarity['pos']
 		neu = post_polarity['neu']
@@ -40,14 +43,21 @@ def json_parser(json_script):
 		post_body = [post_id, post_caption, post_picutre, post_timestamp, pos, neu, neg]
 		posts_list.append(post_body)
 
-	return persist_posts(posts_list)
+	#return persist_posts(posts_list)
 
 def persist_posts(posts_list):
-	"""
+	conn = MySQLConnection(**cfg.mysql)
+	cursor = conn.cursor()
 	for post in posts_list:
-		print(post[1])
-		print(ac(post[1]))
-	"""
+		try:
+			cursor.execute("""INSERT INTO posts VALUES (%s,%s,%s,%s,%s,%s,%s)""",
+				(post[0],post[1],post[2],post[3],post[4],post[5],post[6]))
+			conn.commit()
+		except TypeError :
+			print(e)
+			conn.rollback()
+
+
 def main():
 	tag = sys.argv[1]
 	base_url = "https://www.instagram.com/explore/tags/"
