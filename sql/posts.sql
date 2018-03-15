@@ -7,7 +7,7 @@ CREATE TABLE `posts` (
 	`neu` DOUBLE NULL DEFAULT NULL,
 	`neg` DOUBLE NULL DEFAULT NULL,
 	`hashtag` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_bin',
-	PRIMARY KEY (`id`, `picture_url`, `timestamp`)
+	PRIMARY KEY (`id`)
 )
 COLLATE='utf8mb4_bin'
 ENGINE=InnoDB

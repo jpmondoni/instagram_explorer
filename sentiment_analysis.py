@@ -1,6 +1,6 @@
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-def analyze_caption(caption):
+def analyze_caption(sentence):
 	analyzer = SentimentIntensityAnalyzer()
-	vs = analyzer.polarity_scores(caption)
+	vs = analyzer.polarity_scores(sentence)
 	return vs

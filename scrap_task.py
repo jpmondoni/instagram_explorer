@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import requests, re, sys, os, string
 import json
 import database_conf as cfg
@@ -7,7 +5,6 @@ from mysql.connector import MySQLConnection, Error
 from lxml import html
 from bs4 import BeautifulSoup
 from sentiment_analysis import analyze_caption as ac
-
 
 def get_json_script(url):
 	page = requests.get(url)
@@ -19,7 +16,6 @@ def get_json_script(url):
 	for i, script in enumerate(scripts):
 		cut = script.text[:18]
 		if(cut == "window._sharedData"):
-#			print(scripts[i].text)
 			return json_parser(scripts[i].text)
 		else:
 			continue
@@ -29,6 +25,7 @@ def json_parser(json_script):
 	# exclude script definition and semicolon
 	explore_data = json.loads(json_script[21:len(json_script)-1])
 	posts = (explore_data['entry_data']['TagPage'][0]['graphql']['hashtag']['edge_hashtag_to_media']['edges'])
+	hashtag = explore_data['entry_data']['TagPage'][0]['graphql']['hashtag']['name']
 	posts_list = []
 	for i in range(len(posts)):
 		post_id = (posts[i]['node']['shortcode'])
@@ -42,7 +39,7 @@ def json_parser(json_script):
 		neg = post_polarity['neg']
 		post_picutre = (posts[i]['node']['display_url'])
 		post_timestamp = (posts[i]['node']['taken_at_timestamp'])
-		post_body = [post_id, post_caption, post_picutre, post_timestamp, pos, neu, neg]
+		post_body = [post_id, post_caption, post_picutre, post_timestamp, pos, neu, neg, hashtag]
 		posts_list.append(post_body)
 
 
@@ -53,19 +50,15 @@ def persist_posts(posts_list):
 	cursor = conn.cursor()
 	for post in posts_list:
 		try:
-			cursor.execute("""INSERT IGNORE INTO posts VALUES (%s,%s,%s,%s,%s,%s,%s)""",
-				(post[0],post[1],post[2],post[3],post[4],post[5],post[6]))
+			cursor.execute("""INSERT IGNORE INTO posts VALUES (%s,%s,%s,%s,%s,%s,%s,%s)""",
+				(post[0],post[1],post[2],post[3],post[4],post[5],post[6],post[7]))
 			conn.commit()
 		except TypeError :
 			print(e)
-			#conn.rollback()
+			conn.rollback()
 			continue
 
-def main():
-	tag = sys.argv[1]
+def scrap_init(tag):
 	base_url = "https://www.instagram.com/explore/tags/"
 	explore_url = base_url + tag
 	get_json_script(explore_url)
-
-if __name__ == "__main__":
-	main()
