@@ -1,10 +1,14 @@
 CREATE TABLE `posts` (
-  `id` varchar(100) NOT NULL,
-  `caption` longtext,
-  `picture_url` varchar(255) NOT NULL,
-  `timestamp` int(11) NOT NULL,
-  `pos` double DEFAULT NULL,
-  `neu` double DEFAULT NULL,
-  `neg` double DEFAULT NULL,
-  PRIMARY KEY (`id`,`picture_url`,`timestamp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+	`id` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_bin',
+	`caption` LONGTEXT NULL COLLATE 'utf8mb4_bin',
+	`picture_url` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_bin',
+	`timestamp` INT(11) NOT NULL,
+	`pos` DOUBLE NULL DEFAULT NULL,
+	`neu` DOUBLE NULL DEFAULT NULL,
+	`neg` DOUBLE NULL DEFAULT NULL,
+	`hashtag` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_bin',
+	PRIMARY KEY (`id`, `picture_url`, `timestamp`)
+)
+COLLATE='utf8mb4_bin'
+ENGINE=InnoDB
+;

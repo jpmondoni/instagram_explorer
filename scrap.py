@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import requests, re, sys, os, string
 import json
 import database_conf as cfg
@@ -43,20 +45,21 @@ def json_parser(json_script):
 		post_body = [post_id, post_caption, post_picutre, post_timestamp, pos, neu, neg]
 		posts_list.append(post_body)
 
-	#return persist_posts(posts_list)
+
+	return persist_posts(posts_list)
 
 def persist_posts(posts_list):
 	conn = MySQLConnection(**cfg.mysql)
 	cursor = conn.cursor()
 	for post in posts_list:
 		try:
-			cursor.execute("""INSERT INTO posts VALUES (%s,%s,%s,%s,%s,%s,%s)""",
+			cursor.execute("""INSERT IGNORE INTO posts VALUES (%s,%s,%s,%s,%s,%s,%s)""",
 				(post[0],post[1],post[2],post[3],post[4],post[5],post[6]))
 			conn.commit()
 		except TypeError :
 			print(e)
-			conn.rollback()
-
+			#conn.rollback()
+			continue
 
 def main():
 	tag = sys.argv[1]

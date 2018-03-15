@@ -4,4 +4,5 @@ mysql = {
   'host': '127.0.0.1',
   'database': 'insta_posts',
   'raise_on_warnings': True,
+  'charset' : 'utf8mb4',
 }
