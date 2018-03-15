@@ -28,11 +28,13 @@ def json_parser(json_script):
 	hashtag = explore_data['entry_data']['TagPage'][0]['graphql']['hashtag']['name']
 	posts_list = []
 	for i in range(len(posts)):
+		# Todo : get number of likes 
 		post_id = (posts[i]['node']['shortcode'])
 		try:
 			post_caption = (posts[i]['node']['edge_media_to_caption']['edges'][0]['node']['text'])
 		except IndexError as e:
-			print(e)
+			continue
+
 		post_polarity = ac(post_caption)
 		pos = post_polarity['pos']
 		neu = post_polarity['neu']
