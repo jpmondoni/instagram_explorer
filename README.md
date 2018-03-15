@@ -1,5 +1,5 @@
 # Instragram Explorer - Scraping and Learning
-A simple & basic package to build social media datasets based on Instagram public posts.
+A simple & basic package to build social media datasets based on Instagram public posts, using web scraping techniquies with BeautifulSoup.
 
 ## Purpose
 This repo provides a pack of scraping functions that work with Instagram "Explore" page as of March, 2018.
