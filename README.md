@@ -9,7 +9,7 @@ The goal of this project is to provide a tool to analysts, programmer, data scie
 The intent is also to create tweaks that help on data augmentation of datasets.
 
 ## Usage
-This app can be used as of [v0.1.0-beta.2 as ](https://github.com/jpmondoni/instagram_explorer/releases/tag/v0.1.0-beta.2) with 3 types of arguments: [single hashtag](#single-hashtag), [hashtag list from file](#hashtag-list)or [hashtag + hashtag similar words](#hashtag-and-similar-words).
+This app can be used as of [v0.1.0-beta.2 as ](https://github.com/jpmondoni/instagram_explorer/releases/tag/v0.1.0-beta.2) with 3 types of arguments: [single hashtag](#single-hashtag), [hashtag list from file](#hashtag-list) or [hashtag + hashtag similar words](#hashtag-and-similar-words).
 
 ### Single Hashtag
 A single hashtag can be passed as an argument on the compiler, such as:
