@@ -39,7 +39,6 @@ brazil
 neymar
 worldcup
 ronaldinho
-dribre
 ```
 
 2. Use the argument `-f filename.txt` to execute the code, like:
