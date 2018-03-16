@@ -15,6 +15,7 @@ Python 3.6.3 :: Anaconda custom (64-bit)
 | mysql-connector-python | 2.0.4 |
 | vaderSentiment | 2.5 |
 | nltk.corpus.wordnet¹ | - |
+| Flask | 0.12.2 |
 
 ¹ for `nltk.corpus.wordnet` version, simple download from `nltk.download()`manager.
 
