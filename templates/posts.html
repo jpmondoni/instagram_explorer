@@ -25,7 +25,8 @@
                     <td>{{ post.post_id }}</td>
                     <td>{{ post.caption }}</td>
                     <td>{{ post.hashtag }}</td>
-                    <td>{{ post.pciture_url }}</td>
+                    <!-- TODO: Fix Bytearray problems -->
+                    <td><a href="{{ post.picture_url }}">{{ text }}</td>
                 </tr>
             {% endfor%}
             </tbody>
