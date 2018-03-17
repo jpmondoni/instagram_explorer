@@ -11,10 +11,10 @@ def query_posts():
 	posts = []
 	for(id, caption, picture_url, hashtag) in cursor:
 		post = {
-			'id' : id,
-			'caption' : caption,
-			'picture_url' : picture_url,
-			'hashtag' : hashtag
+			'id' : id.decode('utf8'),
+			'caption' : caption.decode('utf8'),
+			'picture_url' : picture_url.decode('utf8'),
+			'hashtag' : hashtag.decode('utf8')
 		}
 		posts.append(post)
 
@@ -22,3 +22,11 @@ def query_posts():
 	cnx.close()
 
 	return posts
+
+
+
+def main():
+	query_posts()
+
+if __name__ == "__main__":
+	main()
