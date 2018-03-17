@@ -10,7 +10,7 @@ def query_posts(search_tag):
 	posts = []
 	for(id, caption, picture_url, hashtag) in cursor:
 		post = {
-			'id' : id.decode('utf8'),
+			'post_id' : id.decode('utf8'),
 			'caption' : caption.decode('utf8'),
 			'picture_url' : picture_url.decode('utf8'),
 			'hashtag' : hashtag.decode('utf8')
