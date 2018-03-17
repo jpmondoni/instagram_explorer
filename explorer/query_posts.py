@@ -2,12 +2,11 @@ import mysql.connector
 import database_conf as cfg
 
 
-def query_posts():
+def query_posts(search_tag):
 	cnx = mysql.connector.connect(**cfg.mysql)
 	cursor = cnx.cursor()
-	query = ("""SELECT id, caption, picture_url, hashtag FROM posts LIMIT 0, 30""")
-
-	cursor.execute(query)
+	query = ("""SELECT id, caption, picture_url, hashtag FROM posts WHERE hashtag = %s""")
+	cursor.execute(query, (search_tag,))
 	posts = []
 	for(id, caption, picture_url, hashtag) in cursor:
 		post = {
@@ -18,15 +17,13 @@ def query_posts():
 		}
 		posts.append(post)
 
+	print(len(posts))
+
 	cursor.close()
 	cnx.close()
 
 	return posts
 
 
-
-def main():
-	query_posts()
-
 if __name__ == "__main__":
-	main()
+	query_posts('sunset')	
