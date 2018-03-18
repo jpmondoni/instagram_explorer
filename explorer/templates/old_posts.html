@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Posts</title>
+  </head>
+  <body>
+    <div class="container">
+        <div class="page-header">
+            <h1>{{ Posts }}</h1>
+        </div>
+        <table class="table table-striped table-responsive table-bordered">
+            <thead class="thead-default">
+                <tr>
+                    <th>Id</th>
+                    <th>Caption</th>
+                    <th>Hashtag</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for post in posts%}
+                <tr>
+                    <td>{{ post.post_id }}</td>
+                    <td>{{ post.caption }}</td>
+                    <td>{{ post.hashtag }}</td>
+                    <!-- TODO: Fix Bytearray problems -->
+                    <td><img src="{{ post.picture_url }}">{{ text }}</td>
+                </tr>
+            {% endfor%}
+            </tbody>
+        </table>
+    </div>
+  </body>
+</html>

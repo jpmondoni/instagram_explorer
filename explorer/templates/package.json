@@ -1,0 +1,36 @@
+{
+    "title": "4 Col Portfolio",
+    "name": "startbootstrap-4-col-portfolio",
+    "version": "4.0.0",
+    "description": "A four column portfolio HTML template built with Bootstrap",
+    "keywords": [
+        "css",
+        "sass",
+        "html",
+        "responsive",
+        "theme",
+        "template"
+    ],
+    "homepage": "https://startbootstrap.com/template-overviews/4-col-portfolio",
+    "bugs": {
+        "url": "https://github.com/BlackrockDigital/startbootstrap-4-col-portfolio/issues",
+        "email": "feedback@startbootstrap.com"
+    },
+    "license": "MIT",
+    "author": "Start Bootstrap",
+    "contributors": [
+        "David Miller (http://davidmiller.io/)"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/BlackrockDigital/startbootstrap-4-col-portfolio.git"
+    },
+    "dependencies": {
+        "bootstrap": "4.0.0",
+        "jquery": "3.3.1"
+    },
+    "devDependencies": {
+        "browser-sync": "2.23.6",
+        "gulp": "^3.9.1"
+    }
+}
