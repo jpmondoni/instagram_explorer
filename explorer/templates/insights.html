@@ -1,28 +1,38 @@
 {% extends "template.html" %}
 {% block conteudo %}
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+	
 	<div class="container">
-
 	<!-- Page Heading -->
-	<h1 class="my-4">{{ subtitle }}
-	    <h4>
-	    	<small>#{{ hashtag }}</small>
-	    </h4>
+	<h1 class="my-4">{{ subtitle }}</h1>
+		<h4>
+			<small>#hashtag</small>
+		</h4>
 
 		<br><br>
-		<div class="overlay"></div>
-		<div class="masthead">
-			<div class="row">
-				<div class="input-group input-group-lg">
-				  <input type="text" class="form-control" placeholder="#hashtag" aria-describedby="sizing-addon1" name="hashtag">
-				  <input type="submit" style="position: absolute; left: -9999px"/>
-				</div>
+		<div class"row">
+			<div class="chart-container" style="position: relative; height:20vh; width:40vw">
+				<canvas id="myChart"></canvas>
+				<script>
+					var ctx = document.getElementById("myChart");
+					var myChart = new Chart(ctx, {
+						type: 'radar',
+						data: {
+							labels: ['Analytical', 'Fear', 'Joy', 'Anger', 'Confident', 'Sadness', 'Tentative'],
+							datasets: [{
+								data: [20, 10, 4, 2, 5, 1, 12]
+							}]
+						},
+						options: {}
+					});
+				</script>
 			</div>
 		</div>
-		</div>
-	</h1>
-
-
-
+	
+	</div>
 {% endblock %}
 

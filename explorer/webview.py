@@ -24,11 +24,10 @@ def load():
 
 
 @app.route('/insights/')
-def insights(hashtag):
+def insights():
 	return render_template('insights.html',
 						   title=__global_title,
-						   subtitle='Insights',
-						   hashtag='hashtag')
+						   subtitle='Insights')
 
 
 app.run(debug=True)
