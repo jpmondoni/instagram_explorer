@@ -4,7 +4,7 @@ import database_conf as cfg
 from mysql.connector import MySQLConnection, Error
 from lxml import html
 from bs4 import BeautifulSoup
-from sentiment_analysis import analyze_caption as ac
+from sentiment_analysis import analyze_caption 
 
 def get_json_script(url, persist):
 	page = requests.get(url)
@@ -35,10 +35,12 @@ def json_parser(json_script, persist):
 		except IndexError as e:
 			continue
 
-		post_polarity = ac(post_caption)
-		pos = post_polarity['pos']
-		neu = post_polarity['neu']
-		neg = post_polarity['neg']
+		post_polarity = analyze_caption(post_caption)
+		pos = post_polarity['avg_pos']
+		neu = post_polarity['avg_neu']
+		neg = post_polarity['avg_neg']
+		com = post_polarity['avg_com']
+		other_tags = post_polarity['hashtag_list']
 		post_picture = (posts[i]['node']['display_url'])
 		post_timestamp = (posts[i]['node']['taken_at_timestamp'])
 		post_body = [post_id, post_caption, post_picture, post_timestamp, pos, neu, neg, hashtag]
@@ -51,7 +53,7 @@ def json_parser(json_script, persist):
 					 'neu': neu,
 					 'hashtag' : hashtag
 					}
-					
+
 		posts_list.append(post_dict)
 
 
