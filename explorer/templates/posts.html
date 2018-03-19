@@ -1,0 +1,31 @@
+{% extends "template.html" %}
+{% block conteudo %}
+    <!-- Page Content -->
+    <div class="container">
+
+      <!-- Page Heading -->
+      <h1 class="my-4">Retrieved Posts
+        <small>#{{ hashtag }}</small>
+      </h1>
+
+      <div class="row">
+        {% for post in posts%}
+        <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+          <div class="card h-100">
+            <img class="img-fluid" src="{{ post.picture_url }}" alt="">
+            <div class="card-img-overlay">
+            	<a href="https://www.instagram.com/p/{{ post.post_id }}"><i class="fab fa-instagram"></i></a>
+            </div>
+            <div class="card-body">
+              <h4 class="card-title">
+                
+              </h4>
+              <p class="card-text">{{ post.caption[:280] }}...</p>
+            </div>
+          </div>
+        </div>
+        {% endfor%}
+      </div>
+    </div>
+    <!-- /.container -->
+{% endblock %}

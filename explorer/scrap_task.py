@@ -6,7 +6,7 @@ from lxml import html
 from bs4 import BeautifulSoup
 from sentiment_analysis import analyze_caption as ac
 
-def get_json_script(url):
+def get_json_script(url, persist):
 	page = requests.get(url)
 	soup = BeautifulSoup(page.text, "lxml")
 	""" instagram generates a js type element and then converts to HTML
@@ -16,12 +16,12 @@ def get_json_script(url):
 	for i, script in enumerate(scripts):
 		cut = script.text[:18]
 		if(cut == "window._sharedData"):
-			return json_parser(scripts[i].text)
+			return json_parser(scripts[i].text, persist)
 		else:
 			continue
 
 
-def json_parser(json_script):
+def json_parser(json_script, persist):
 	# exclude script definition and semicolon
 	explore_data = json.loads(json_script[21:len(json_script)-1])
 	posts = (explore_data['entry_data']['TagPage'][0]['graphql']['hashtag']['edge_hashtag_to_media']['edges'])
@@ -39,13 +39,22 @@ def json_parser(json_script):
 		pos = post_polarity['pos']
 		neu = post_polarity['neu']
 		neg = post_polarity['neg']
-		post_picutre = (posts[i]['node']['display_url'])
+		post_picture = (posts[i]['node']['display_url'])
 		post_timestamp = (posts[i]['node']['taken_at_timestamp'])
-		post_body = [post_id, post_caption, post_picutre, post_timestamp, pos, neu, neg, hashtag]
+		post_body = [post_id, post_caption, post_picture, post_timestamp, pos, neu, neg, hashtag]
+		post_dict = {'post_id': post_id,
+					 'caption': post_caption,
+					 'picture_url' : post_picture,
+					 'pos': pos,
+					 'neg': neg,
+					 'neu': neu,
+		}
 		posts_list.append(post_body)
 
-
-	return persist_posts(posts_list)
+	if(persist):
+		return persist_posts(posts_list)
+	else:
+		return post_dict
 
 def persist_posts(posts_list):
 	conn = MySQLConnection(**cfg.mysql)
@@ -60,7 +69,7 @@ def persist_posts(posts_list):
 			continue
 			
 
-def scrap_init(tag):
+def scrap_init(tag, persist):
 	base_url = "https://www.instagram.com/explore/tags/"
 	explore_url = base_url + tag
-	get_json_script(explore_url)
+	return get_json_script(explore_url, persist)
