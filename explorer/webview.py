@@ -11,9 +11,10 @@ __global_title = 'Instagram Data Visualization'
 def load():
 	#post_list = query_posts(hashtag)
 	#print(len(post_list))
+
 	hashtag = request.form['hashtag']
 	post_list = generate_list(hashtag)
-		
+
 	return render_template('posts.html',
 						   title=__global_title,
 						   posts=post_list,

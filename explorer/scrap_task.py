@@ -45,16 +45,20 @@ def json_parser(json_script, persist):
 		post_dict = {'post_id': post_id,
 					 'caption': post_caption,
 					 'picture_url' : post_picture,
+					 'timestamp' : post_timestamp,
 					 'pos': pos,
 					 'neg': neg,
 					 'neu': neu,
-		}
-		posts_list.append(post_body)
+					 'hashtag' : hashtag
+					}
+					
+		posts_list.append(post_dict)
+
 
 	if(persist):
 		return persist_posts(posts_list)
 	else:
-		return post_dict
+		return posts_list
 
 def persist_posts(posts_list):
 	conn = MySQLConnection(**cfg.mysql)
