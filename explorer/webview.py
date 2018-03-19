@@ -1,30 +1,34 @@
-from query_posts import query_posts
 from flask import Flask, render_template, request, url_for
 import Post
+from scrap_task import scrap_init
 from retrieve_posts import generate_list
 
 app = Flask(__name__, static_url_path='/static')
 
 __global_title = 'Instagram Data Visualization'
 
+@app.route('/')
+def index():
+	return render_template('index.html',
+							title=__global_title)
+
 @app.route('/posts/', methods=['POST', ])
 def load():
-	#post_list = query_posts(hashtag)
-	#print(len(post_list))
-
 	hashtag = request.form['hashtag']
-	post_list = generate_list(hashtag)
+	post_list = scrap_init(hashtag, False)
 
 	return render_template('posts.html',
 						   title=__global_title,
 						   posts=post_list,
 						   hashtag=hashtag)
 
-@app.route('/')
-def index():
-	return render_template('index.html',
-							title=__global_title)
 
+@app.route('/insights/')
+def insights(hashtag):
+	return render_template('insights.html',
+						   title=__global_title,
+						   subtitle='Insights',
+						   hashtag='hashtag')
 
 
 app.run(debug=True)

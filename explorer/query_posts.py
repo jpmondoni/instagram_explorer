@@ -1,5 +1,5 @@
 import mysql.connector
-import database_conf as cfg
+from sql import database_conf as cfg
 
 
 def query_posts(search_tag):

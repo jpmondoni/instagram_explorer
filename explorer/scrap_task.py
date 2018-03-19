@@ -1,6 +1,6 @@
 import requests, re, sys, os, string
 import json
-import database_conf as cfg
+from sql import database_conf as cfg
 from mysql.connector import MySQLConnection, Error
 from lxml import html
 from bs4 import BeautifulSoup

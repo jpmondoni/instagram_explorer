@@ -1,0 +1,28 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+	<div class="container">
+
+	<!-- Page Heading -->
+	<h1 class="my-4">{{ subtitle }}
+	    <h4>
+	    	<small>#{{ hashtag }}</small>
+	    </h4>
+
+		<br><br>
+		<div class="overlay"></div>
+		<div class="masthead">
+			<div class="row">
+				<div class="input-group input-group-lg">
+				  <input type="text" class="form-control" placeholder="#hashtag" aria-describedby="sizing-addon1" name="hashtag">
+				  <input type="submit" style="position: absolute; left: -9999px"/>
+				</div>
+			</div>
+		</div>
+		</div>
+	</h1>
+
+
+
+{% endblock %}
+
