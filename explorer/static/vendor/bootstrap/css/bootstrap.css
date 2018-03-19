@@ -4440,6 +4440,8 @@ tbody.collapse.show {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+  overflow: hidden;
+  cursor:pointer;
 }
 
 .card > hr {
@@ -4540,6 +4542,17 @@ tbody.collapse.show {
   width: 100%;
   border-top-left-radius: calc(0.25rem - 1px);
   border-top-right-radius: calc(0.25rem - 1px);
+  top: 0;
+  transform: translateY(-250px);
+  transition: all .3s ease-in-out;
+  opacity:0;
+  overflow: hidden;
+}
+
+.card:hover .card-img-top {
+  background-color: #2b496c;
+  transform: translateY(0);
+  opacity:100;
 }
 
 .card-img-bottom {
