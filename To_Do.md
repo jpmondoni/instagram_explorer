@@ -22,4 +22,4 @@
 
 # Ideas
 * Develop a similar twitter scraper 
-@Lucasagcv * Sentiment history timeline based on caption of the photos
+* @Lucasagcv - Sentiment history timeline based on caption of the photos
