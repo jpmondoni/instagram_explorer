@@ -3,6 +3,7 @@ import Post
 import json
 from scrap_task import scrap_init
 from retrieve_posts import generate_list
+from images_insights import image_info
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -35,15 +36,18 @@ def load():
 def render_insights(hashtag):
 
 	cookies = request.cookies
+	image_insight_list = []
 	for cookie in cookies:
 		if(cookie[:5] == 'post_'):
 			cookie_info = request.cookies.get(cookie)
 			json_cookie = json.loads(cookie_info)
-			
+			image_insight_list.append(image_info(json_cookie['picture_url']))
+
 	return render_template('insights.html',
 							title=__global_title,
 							subtitle='Insights',
-							hashtag=hashtag)
+							hashtag=hashtag,
+							img_list=image_insight_list)
 
 
 app.run(debug=True)
