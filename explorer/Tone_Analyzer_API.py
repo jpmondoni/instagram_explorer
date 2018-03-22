@@ -33,7 +33,6 @@ def display_results(text):
 	sents = sent_tokenize(text)
 	if(len(sents) > 1):
 		for i in data['sentences_tone']:
-			print(i['sentence_id'])
 			print("Sentence #",i['sentence_id'],i['text'][:40])
 			for j in i['tones']:
 				print(j['tone_name'].ljust(20),(str(round(j['score'] * 100,1)) + "%").rjust(10))
