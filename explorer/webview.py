@@ -58,4 +58,4 @@ def render_insights(hashtag):
 							img_list=image_insight_list)
 
 
-app.run(debug=True)
+app.run(debug=True,host= '0.0.0.0')

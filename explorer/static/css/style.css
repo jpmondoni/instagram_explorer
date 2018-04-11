@@ -12,3 +12,27 @@
     left: 5px;
     top: 5px;
 }
+
+.middle {
+  transition: .2s ease;
+  opacity: 0;
+  position: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.card:hover .img-fluid{
+  transition: .2s ease;
+  opacity:0.6;
+}
+
+.card:hover .middle {
+  opacity: 1;
+}
+
+.fab{
+  font-size: 2.0em;
+}
