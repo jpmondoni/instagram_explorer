@@ -5,7 +5,7 @@
 
       <!-- Page Heading -->
       <h1 class="my-4">Retrieved Posts
-        <small>#{{ hashtag }}</small>
+        <small><a href="{{ url_for('render_insights', hashtag=hashtag) }}">#{{ hashtag }}</small>
       </h1>
 
       <div class="row">
@@ -27,5 +27,4 @@
         {% endfor%}
       </div>
     </div>
-    <!-- /.container -->
 {% endblock %}

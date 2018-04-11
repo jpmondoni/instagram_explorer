@@ -55,3 +55,10 @@ body {
 .img-post-box img{
     height: 100%;
 }
+
+footer {
+    position: static;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+}
