@@ -5,11 +5,14 @@
 * Fetch images and posts on .zip file
 * Use pages or scroll loading
 * Implement hashtag combo search
-* Imporve layout responsiveness, usage, etc.
+* Improve layout responsiveness, usage, etc.
 
 # Back end
 * Improve VaderSentiment analysis with stem function and paragraph usagae
 * Improve WordNet depth and usage
+* Cross validate if a post id was previously analyzed
+* Use asynchronous database persistence
+* Improve session data usage
 
 # Data Visualization
 * Create functions to understand trends and give insights about hashtags
@@ -18,7 +21,9 @@
 		* Vader Sentiment polaritry score
 		* Some Computer Vision application
 * Use Watson API
-* Charts with cool info
+* Create a new session to give data based on all posts analyzed (persisted on the database)
+
 
 # Ideas
-* Develop a similar twitter scraper 
+* Implement self posts usage with Instagram Scraping package
+
