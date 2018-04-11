@@ -36,6 +36,7 @@ def load():
 def render_insights(hashtag):
 
 	cookies = request.cookies
+
 	image_insight_list = []
 	for i,cookie in enumerate(cookies):
 		if(cookie[:5] == 'post_'):
@@ -43,9 +44,10 @@ def render_insights(hashtag):
 			json_cookie = json.loads(cookie_info)
 			post_id = cookie[5:]
 			img_obj = image_info(post_id, json_cookie['picture_url'])
+			print(img_obj['dominant_color'])
 			image_insight_list.append(img_obj)
-			print(img_obj.keys())
-		print(i)
+			#print(img_obj.keys())
+		#print(i)
 		if i > 5:
 			break
 

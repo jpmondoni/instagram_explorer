@@ -51,7 +51,7 @@ def image_info(post_id, url):
 	image_dict ={
 		'post_id': post_id,
 		'peak': peak,
-		'dominant_color': dominant_color,
+		'dominant_color': dominant_color[:6],
 		'format_avg_color': format_avg_color
 	}
 
@@ -59,4 +59,4 @@ def image_info(post_id, url):
 
 
 if __name__ == '__main__':
-	image_info("https://www.urbanarts.com.br/imagens/produtos/079232/Detalhes/por-do-sol-no-ceara.jpg")
+	image_info(1, "https://www.urbanarts.com.br/imagens/produtos/079232/Detalhes/por-do-sol-no-ceara.jpg")

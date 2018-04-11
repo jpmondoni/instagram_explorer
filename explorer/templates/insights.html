@@ -8,12 +8,9 @@
 	
 	<div class="container">
 	<!-- Page Heading -->
-	<h1 class="my-4">{{ subtitle }}</h1>
-		<h4>
-			<small>#{{ hashtag }}</small>
-		</h4>
-
-		<br><br>
+	<h1 class="my-4">{{ subtitle }}
+		<small>#{{ hashtag }}</small>
+	</h1>
 		<!--<div class="row d-flex justify-content-center">
 			<div class="card">
 				<div class="col-sm-10">
@@ -36,7 +33,6 @@
 				</div>
 			</div>
 		</div>-->
-		<p>
 		<div class="row">
 			<div class="card">
 				<div class="card-body">
@@ -51,8 +47,16 @@
 					{% for img in img_list %}
 					<tr>
 						<td>{{ img.post_id }}</td>
-						<td>{{ img.format_avg_color }}</td>
-						<td>{{ img.dominant_color }}</td>
+						<td>
+							<div class="input-color">
+							    <div class="color-box" style="background-color: {{ img.format_avg_color }};"></div>
+							</div>
+						</td>
+						<td>
+							<div class="input-color">
+							    <div class="color-box" style="background-color: #{{ img.dominant_color }};"></div>
+							</div>
+						</td>
 						<td>{{ img.peak }}</td>
 					</tr>
 					{% endfor %}
