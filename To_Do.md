@@ -26,4 +26,3 @@
 
 # Ideas
 * Implement self posts usage with Instagram Scraping package
-
