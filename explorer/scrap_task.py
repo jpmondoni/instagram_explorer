@@ -67,13 +67,13 @@ def persist_posts(posts_list):
 	cursor = conn.cursor()
 	for post in posts_list:
 		try:
-			cursor.execute("""INSERT INTO posts VALUES (%s,%s,%s,%s,%s,%s,%s,%s)""",
-				(post[0],post[1],post[2],post[3],post[4],post[5],post[6],post[7]))
+			cursor.execute("""INSERT IGNORE INTO posts VALUES (%s,%s,%s,%s,%s,%s,%s,%s)""",
+				(post['post_id'],post['caption'],post['picture_url'],post['timestamp'],post['pos'],post['neg'],post['neu'],post['hashtag']))
 			conn.commit()
-		except TypeError as e:
-			print(e)
+		except:
 			continue
-			
+	
+	return posts_list
 
 def scrap_init(tag, persist):
 	base_url = "https://www.instagram.com/explore/tags/"
