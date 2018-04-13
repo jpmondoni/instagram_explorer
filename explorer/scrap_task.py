@@ -6,6 +6,7 @@ from lxml import html
 from bs4 import BeautifulSoup
 from sentiment_analysis import analyze_caption 
 
+
 def get_json_script(url, persist):
 	page = requests.get(url)
 	soup = BeautifulSoup(page.text, "lxml")

@@ -4,6 +4,7 @@ import json
 from scrap_task import scrap_init
 from retrieve_posts import generate_list
 from images_insights import image_info
+from save_insights_analysis import check_existence
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'this is a secret!'
@@ -43,6 +44,14 @@ def render_insights(hashtag):
 	for key in session.keys():
 		json_cookie = json.loads(session[key])
 		post_id = key
+		post_exists = check_existence(post_id)
+		pict_url = ""
+		print(post_exists)
+		if(post_exists[0]):
+			for picture_url in post_exists[1]:
+				pict_url = picture_url
+			image_insight_list.append(post_id, picture_url)
+
 		img_obj = image_info(post_id, json_cookie['picture_url'])
 		image_insight_list.append(img_obj)
 
