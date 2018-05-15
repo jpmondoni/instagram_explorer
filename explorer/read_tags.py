@@ -4,6 +4,7 @@ import sys
 
 tag_list = []
 
+persist = True
 def main():
 	# Init scraping based on a list of words in a file.
 	if(sys.argv[1] == "-f"):
@@ -21,7 +22,7 @@ def main():
 	elif(sys.argv[1] == "-w"):
 		__hashtag = sys.argv[2]
 		print('words = ', __hashtag)
-		scrap_init(__hashtag)
+		scrap_init(__hashtag, persist)
 
 	# Experimental function to use combo of words using NLTK WordNet
 	elif(sys.argv[1] == "-wn"):
@@ -29,8 +30,7 @@ def main():
 		tag_list = sw(__hashtag)
 		print('words = ', tag_list)
 		for tag in tag_list:
-			# sw(word) function returns a list with [word, similarity], so we need to use the first element.
-			scrap_init(tag[0])
+			scrap_init(tag, persist)
 
 
 if __name__ == "__main__":
