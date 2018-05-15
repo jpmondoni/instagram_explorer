@@ -14,73 +14,80 @@ def get_json_script(url, hashtag, persist):
 	browser = webdriver.Chrome()
 	browser.get(url)
 
+	source_list = []
 	lenOfPage = browser.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
 	match=False
 	while(match==False):
 		lastCount = lenOfPage
 		time.sleep(1)
 		lenOfPage = browser.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
-		print(lastCount, lenOfPage)
+		source_list.append(browser.page_source)
+		print(lastCount, lenOfPage, len(source_list))
 		if lastCount==lenOfPage:
 			match=True
 
-	
-	soup = BeautifulSoup(browser.page_source, "lxml")
-
-	mck9w_blocks = soup.find_all("div", class_="_mck9w")
 	posts_list = []
-	for mck9w in mck9w_blocks:
-		for a in mck9w.find_all('a'):
-			pid = a.get('href').replace("/p/","").replace("/?tagged="+hashtag, "")
-		mck9w.find_all("div", clas_="_4rbun")
-		for _4rbun in mck9w:
-			for img in _4rbun.find_all('img', alt=True, src=True):
-				alt = img['alt']
-				src = img['src']
-		
-		post_dict = {
-			'post_id': pid,
-			'caption': alt,
-			'picture_url': src
-		}
+	id_set = set([])
 
-		posts_list.append(post_dict)
+	for page in source_list:
+		soup = BeautifulSoup(page, "lxml")
+
+		mck9w_blocks = soup.find_all("div", class_="_mck9w")
+		for mck9w in mck9w_blocks:
+			pid = ''
+			for a in mck9w.find_all('a'):
+				pid = a.get('href').replace("/p/","").replace("/?tagged="+hashtag, "")
+
+			if pid in id_set:
+				continue
+			else:
+				id_set.add(pid)
+
+			mck9w.find_all("div", clas_="_4rbun")
+			for _4rbun in mck9w:
+				for img in _4rbun.find_all('img', alt=True, src=True):
+					alt = img['alt']
+					src = img['src']
+			
+			post_dict = {
+				'post_id': pid,
+				'caption': alt,
+				'picture_url': src,
+				'hashtag': hashtag
+			}
+
+			posts_list.append(post_dict)
 
 	browser.quit()
+	print(len(id_set), len(posts_list))
 
-	print(len(posts_list))
-	#post_parser(posts_list, persist)
+	post_parser(posts_list, persist)
 
-def post_parser(posts_list, persist):
+def post_parser(posts_found, persist):
 
-	# for i in range(len(posts_list)):
-	# 	# Todo : get number of likes 
-	# 	post_id = (posts[i]['node']['shortcode'])
-	# 	try:
-	# 		post_caption = (posts[i]['node']['edge_media_to_caption']['edges'][0]['node']['text'])
-	# 	except IndexError as e:
-	# 		continue
+	posts_list = []
+	for post in posts_found:
+		post_id = post['post_id']
+		caption = post['caption']
+		picture_url = post ['picture_url']
+		hashtag = post['hashtag']
+		post_polarity = analyze_caption(caption)
+		pos = post_polarity['avg_pos']
+		neu = post_polarity['avg_neu']
+		neg = post_polarity['avg_neg']
+		com = post_polarity['avg_com']
+		other_tags = post_polarity['hashtag_list']
+		#post_body = [post_id, caption, post_picture, pos, neu, neg, hashtag]
+		post_dict = {'post_id': post_id,
+					 'caption': caption,
+					 'picture_url' : picture_url,
+					 'pos': pos,
+					 'neg': neg,
+					 'neu': neu,
+					 'hashtag' : hashtag
+					}
 
-	# 	post_polarity = analyze_caption(post_caption)
-	# 	pos = post_polarity['avg_pos']
-	# 	neu = post_polarity['avg_neu']
-	# 	neg = post_polarity['avg_neg']
-	# 	com = post_polarity['avg_com']
-	# 	other_tags = post_polarity['hashtag_list']
-	# 	post_picture = (posts[i]['node']['display_url'])
-	# 	post_timestamp = (posts[i]['node']['taken_at_timestamp'])
-	# 	post_body = [post_id, post_caption, post_picture, post_timestamp, pos, neu, neg, hashtag]
-	# 	post_dict = {'post_id': post_id,
-	# 				 'caption': post_caption,
-	# 				 'picture_url' : post_picture,
-	# 				 'timestamp' : post_timestamp,
-	# 				 'pos': pos,
-	# 				 'neg': neg,
-	# 				 'neu': neu,
-	# 				 'hashtag' : hashtag
-	# 				}
-
-	# 	posts_list.append(post_dict)
+		posts_list.append(post_dict)
 
 
 	if(persist):
@@ -93,8 +100,8 @@ def persist_posts(posts_list):
 	cursor = conn.cursor()
 	for post in posts_list:
 		try:
-			cursor.execute("""INSERT IGNORE INTO posts VALUES (%s,%s,%s,%s,%s,%s,%s,%s)""",
-				(post['post_id'],post['caption'],post['picture_url'],post['timestamp'],post['pos'],post['neg'],post['neu'],post['hashtag']))
+			cursor.execute("""INSERT IGNORE INTO posts VALUES (%s,%s,%s,%s,%s,%s,%s)""",
+				(post['post_id'],post['caption'],post['picture_url'],post['pos'],post['neg'],post['neu'],post['hashtag']))
 			conn.commit()
 		except:
 			continue
