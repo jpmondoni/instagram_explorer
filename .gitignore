@@ -3,3 +3,5 @@
 1.txt
 explorer/secret/*
 explorer/util/__init__.py
+*.txt
+*.log

@@ -21,7 +21,7 @@ def main():
 	elif(sys.argv[1] == "-w"):
 		__hashtag = sys.argv[2]
 		print('words = ', __hashtag)
-		scrap_init(__hashtag)
+		scrap_init(__hashtag, True)
 
 	# Experimental function to use combo of words using NLTK WordNet
 	elif(sys.argv[1] == "-wn"):
