@@ -22,7 +22,6 @@ def get_json_script(url, hashtag, persist):
 		time.sleep(1)
 		lenOfPage = browser.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
 		source_list.append(browser.page_source)
-		print(lastCount, lenOfPage, len(source_list))
 		if lastCount==lenOfPage:
 			match=True
 
@@ -59,8 +58,7 @@ def get_json_script(url, hashtag, persist):
 			posts_list.append(post_dict)
 
 	browser.quit()
-	print(len(id_set), len(posts_list))
-
+	print("Fecthed {0} post(s) using '{1}' hashtag.".format(len(id_set), hashtag))
 	post_parser(posts_list, persist)
 
 def post_parser(posts_found, persist):

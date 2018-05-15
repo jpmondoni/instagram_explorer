@@ -16,6 +16,8 @@ Python 3.6.3 :: Anaconda custom (64-bit)
 | vaderSentiment | 2.5 |
 | nltk.corpus.wordnet¹ | - |
 | Flask | 0.12.2 |
+| Selenium | 3.11.0 |
+| ChromeDriver | 2.38 |
 
 ¹ for `nltk.corpus.wordnet` version, simple download from `nltk.download()`manager.
 
