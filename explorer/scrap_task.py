@@ -9,12 +9,21 @@ from sentiment_analysis import analyze_caption
 from selenium import webdriver
 
 
-def get_json_script(url, hashtag, persist):
+def fetch_posts(url, hashtag, persist):
+	""""
+	Function fetch_posts
+	This function starts a browser to simulate scroll down, to work with infinite scrolls. Then it will browse through the page until it ends and save all the html source code available.
+	All posts are within the html source code, thus it's necessary to iterate through all divs that contain a post and save the info we want. 
+	Later we will pass this info on to continue the process.
+	"""
 
+	# Initiate a Selenium webdriver and go to our url variable.
 	browser = webdriver.Chrome()
 	browser.get(url)
 
 	source_list = []
+
+	# Scroll through the page and save the source-code into a list. No, this is not the ideal way - but it's working.
 	lenOfPage = browser.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
 	match=False
 	while(match==False):
@@ -31,12 +40,14 @@ def get_json_script(url, hashtag, persist):
 	for page in source_list:
 		soup = BeautifulSoup(page, "lxml")
 
+		# Find divs which class is "_mck9w" and inside, look up for "_4rbun" class. Posts are within this div.
 		mck9w_blocks = soup.find_all("div", class_="_mck9w")
 		for mck9w in mck9w_blocks:
 			pid = ''
 			for a in mck9w.find_all('a'):
 				pid = a.get('href').replace("/p/","").replace("/?tagged="+hashtag, "")
 
+			# If post already saved, simply ignore.
 			if pid in id_set:
 				continue
 			else:
@@ -48,6 +59,7 @@ def get_json_script(url, hashtag, persist):
 					alt = img['alt']
 					src = img['src']
 			
+			# Assign post info into a dict element
 			post_dict = {
 				'post_id': pid,
 				'caption': alt,
@@ -59,12 +71,15 @@ def get_json_script(url, hashtag, persist):
 
 	browser.quit()
 	print("Fecthed {0} post(s) using '{1}' hashtag.".format(len(id_set), hashtag))
-	post_parser(posts_list, persist)
+
+	# Send a list with all posts to be parsed and then saved into a database, if that's the option.
+	return post_parser(posts_list, persist)
 
 def post_parser(posts_found, persist):
 
 	posts_list = []
 	for post in posts_found:
+		# Assign posts to a parsed dictionary and append it to a list
 		post_id = post['post_id']
 		caption = post['caption']
 		picture_url = post ['picture_url']
@@ -87,12 +102,13 @@ def post_parser(posts_found, persist):
 
 		posts_list.append(post_dict)
 
-
+	# Save on MySQL database if persist is True
 	if(persist):
 		return persist_posts(posts_list)
 	else:
 		return posts_list
 
+# MySQL Connection and insert function
 def persist_posts(posts_list):
 	conn = MySQLConnection(**cfg.mysql)
 	cursor = conn.cursor()
@@ -109,4 +125,4 @@ def persist_posts(posts_list):
 def scrap_init(tag, persist):
 	base_url = "https://www.instagram.com/explore/tags/"
 	explore_url = base_url + tag
-	return get_json_script(explore_url, tag, persist)
+	return fetch_posts(explore_url, tag, persist)
